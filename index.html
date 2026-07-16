@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1415,17 +1416,20 @@ footer { background: var(--navy-text); padding: 4.5rem max(5vw, 48px) 0; }
     <button class="modal-close" onclick="closeModal()">✕</button>
     <div class="modal-title">Book a Strategy Call</div>
     <p class="modal-sub">Tell me about your business and I'll be in touch within one business day to schedule your complimentary 45-minute strategy session.</p>
+    <form action="https://api.web3forms.com/submit" method="POST" id="strategyForm">
+      <input type="hidden" name="access_key" value="efea47e8-3cc4-498c-a174-39216bcf586a">
+      <input type="hidden" name="subject" value="New Strategy Call Booking">
     <div class="form-row">
-      <div class="form-group"><label class="form-label">First Name</label><input class="form-input" type="text" placeholder="Your first name"></div>
-      <div class="form-group"><label class="form-label">Last Name</label><input class="form-input" type="text" placeholder="Your last name"></div>
+      <div class="form-group"><label class="form-label">First Name</label><input class="form-input" type="text" name="first_name" placeholder="Your first name" required></div>
+      <div class="form-group"><label class="form-label">Last Name</label><input class="form-input" type="text" name="last_name" placeholder="Your last name" required></div>
     </div>
-    <div class="form-group"><label class="form-label">Business Name</label><input class="form-input" type="text" placeholder="Your company name"></div>
-    <div class="form-group"><label class="form-label">Email Address</label><input class="form-input" type="email" placeholder="your@email.com"></div>
-    <div class="form-group"><label class="form-label">Phone Number</label><input class="form-input" type="tel" placeholder="+44 / +1 / country code + number"></div>
+    <div class="form-group"><label class="form-label">Business Name</label><input class="form-input" type="text" name="business_name" placeholder="Your company name"></div>
+    <div class="form-group"><label class="form-label">Email Address</label><input class="form-input" type="email" name="email" placeholder="your@email.com" required></div>
+    <div class="form-group"><label class="form-label">Phone Number</label><input class="form-input" type="tel" name="phone" placeholder="+44 / +1 / country code + number"></div>
     <div class="form-row">
       <div class="form-group">
         <label class="form-label">Industry</label>
-        <select class="form-select">
+        <select class="form-select" name="industry">
           <option value="">Select industry</option>
           <option>Construction &amp; HVAC</option>
           <option>Manufacturing &amp; Industrial</option>
@@ -1436,7 +1440,7 @@ footer { background: var(--navy-text); padding: 4.5rem max(5vw, 48px) 0; }
       </div>
       <div class="form-group">
         <label class="form-label">Monthly Ad Budget</label>
-        <select class="form-select">
+        <select class="form-select" name="budget">
           <option value="">Select budget</option>
           <option>£1,000 – £2,500 / month</option>
           <option>£2,500 – £5,000 / month</option>
@@ -1447,9 +1451,10 @@ footer { background: var(--navy-text); padding: 4.5rem max(5vw, 48px) 0; }
     </div>
     <div class="form-group">
       <label class="form-label">Current challenge or goal (optional)</label>
-      <textarea class="form-textarea" placeholder="Tell me about your current marketing challenges or what you're hoping to achieve..."></textarea>
+      <textarea class="form-textarea" name="message" placeholder="Tell me about your current marketing challenges or what you're hoping to achieve..."></textarea>
     </div>
-    <button class="btn-primary modal-submit" onclick="submitModal()">Submit Enquiry &rarr;</button>
+    <button class="btn-primary modal-submit" type="submit">Submit Enquiry &rarr;</button>
+    </form>
   </div>
 </div>
 
@@ -1499,7 +1504,22 @@ function closeMobileNav() { document.getElementById('mobileNav').classList.remov
 function openModal(e) { if(e) e.preventDefault(); document.getElementById('modalBg').classList.add('open'); document.body.style.overflow='hidden'; }
 function closeModal() { document.getElementById('modalBg').classList.remove('open'); document.body.style.overflow=''; }
 function closeModalOnBg(e) { if(e.target===document.getElementById('modalBg')) closeModal(); }
-function submitModal() { alert('Thank you for your enquiry. Piyush will be in touch within one business day to schedule your strategy call.'); closeModal(); }
+document.getElementById('strategyForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const form = e.target;
+  fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } })
+    .then(res => res.json())
+    .then(res => {
+      if (res.success) {
+        alert('Thank you! Piyush will be in touch within one business day.');
+        form.reset();
+        closeModal();
+      } else {
+        alert('Something went wrong. Please try again or email directly.');
+      }
+    })
+    .catch(() => alert('Something went wrong. Please try again or email directly.'));
+});
 
 // Scroll reveal
 const revealObs = new IntersectionObserver(entries => {
