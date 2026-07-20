@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -182,7 +184,9 @@ nav.scrolled { box-shadow: 0 4px 24px rgba(15,23,42,0.08); }
   border-bottom: 1px solid var(--border);
   background: rgba(255,255,255,0.95);
   display: flex; padding: 0 max(5vw, 28px);
+  overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
 }
+.hero-switcher::-webkit-scrollbar { display: none; }
 .switcher-tab {
   padding: 0.9rem 1.6rem;
   font-family: var(--font-display); font-size: 0.82rem; font-weight: 600;
@@ -191,6 +195,7 @@ nav.scrolled { box-shadow: 0 4px 24px rgba(15,23,42,0.08); }
   margin-bottom: -1px; cursor: pointer;
   transition: color 0.2s, border-color 0.2s;
   display: flex; align-items: center; gap: 0.55rem;
+  white-space: nowrap; flex-shrink: 0;
 }
 .switcher-tab .tab-dot {
   width: 7px; height: 7px; border-radius: 50%;
@@ -407,13 +412,16 @@ nav.scrolled { box-shadow: 0 4px 24px rgba(15,23,42,0.08); }
 .industry-tabs-bar {
   display: flex; gap: 0.4rem; background: var(--light-bg);
   border: 1px solid var(--border); border-radius: var(--radius-md);
-  padding: 0.3rem; margin-bottom: 3rem; width: fit-content;
+  padding: 0.3rem; margin-bottom: 3rem; width: fit-content; max-width: 100%;
+  overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
 }
+.industry-tabs-bar::-webkit-scrollbar { display: none; }
 .ind-tab-btn {
   padding: 0.65rem 1.5rem; border-radius: 9px;
   font-family: var(--font-display); font-size: 0.84rem; font-weight: 600;
   background: none; border: none; cursor: pointer;
   color: var(--steel); transition: all 0.2s;
+  white-space: nowrap; flex-shrink: 0;
 }
 .ind-tab-btn.active { background: var(--white); color: var(--blue); box-shadow: var(--shadow-md); }
 .ind-tab-btn:hover:not(.active) { color: var(--navy-text); }
@@ -812,31 +820,41 @@ footer { background: var(--navy-text); padding: 4.5rem max(5vw, 48px) 0; }
 @media (max-width: 900px) {
   .nav-links { display: none; } .hamburger { display: flex; }
   .hero-main { grid-template-columns: 1fr; }
-  .hero-visual { min-height: 360px; padding: 1.25rem; }
-  .hero-img-wrap { height: 360px; max-height: none; min-height: 0; }
+  .hero-visual { min-height: 440px; padding: 0.5rem 1.25rem 1.5rem; }
+  .hero-img-wrap { height: 440px; max-height: none; min-height: 0; }
+  .float-card-top { left: 0.75rem; bottom: 1rem; padding: 0.75rem 1rem; }
+  .float-card-mid { right: 0.75rem; top: 4rem; padding: 0.75rem 1rem; min-width: 140px; }
+  .hero-img-tag { top: 1rem; left: 1rem; font-size: 0.62rem; padding: 0.35rem 0.75rem; }
   .hero-content { padding: 2.5rem max(5vw, 24px); }
+  .hero-proof { gap: 1.5rem; }
   .about-grid, .direct-grid { grid-template-columns: 1fr; }
   .about-photo { height: 420px; }
-  .about-float-mini { display: none; }
+  .about-float-mini { right: 1rem; top: 1rem; }
   .about-float-stat { right: 1rem; }
-  .direct-photo-wrap { display: none; }
+  .direct-photo-wrap { display: block; margin-top: 2.5rem; }
+  .direct-photo-badge { top: -1rem; right: 1rem; width: 108px; height: 108px; }
   .ind-panel.active { grid-template-columns: 1fr; }
   .cta-inner { grid-template-columns: 1fr; }
   .cta-actions { align-items: flex-start; }
   .cta-note { text-align: left; }
-  .float-card-top { left: 0.75rem; bottom: 1rem; }
-  .float-card-mid { right: 0.75rem; top: 1rem; }
   .testimonials-grid { grid-template-columns: 1fr; }
+  .section { padding: 4rem max(5vw, 24px); }
+  .section-sm { padding: 3.25rem max(5vw, 24px); }
+  .testimonials-section { padding: 4rem max(5vw, 24px); }
+  .cta-section { padding: 4rem max(5vw, 24px); }
+  .vs-header-row, .vs-body-row { grid-template-columns: 1fr; }
+  .vs-col-pk, .vs-cell.pk-cell { border-left: none; border-top: 1px solid var(--border); }
 }
 @media (max-width: 640px) {
-  .hero-proof { gap: 1.5rem; flex-wrap: wrap; }
+  .hero-proof { gap: 1.25rem; flex-wrap: wrap; padding-top: 1.5rem; }
   .services-grid, .results-grid { grid-template-columns: 1fr; }
   .usp-list { grid-template-columns: 1fr; }
   .process-steps { grid-template-columns: 1fr; }
   .process-step { border-right: none; }
   .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
   .footer-bottom { flex-direction: column; gap: 0.75rem; }
-  .guarantee-header, .guarantee-body { padding: 2rem 1.5rem; }
+  .guarantee-header, .guarantee-body { padding: 1.5rem 1.25rem; }
+  .guarantee-header { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
   .form-row { grid-template-columns: 1fr; }
   .hero-actions { flex-direction: column; }
   .btn-primary, .btn-secondary { justify-content: center; }
@@ -844,6 +862,23 @@ footer { background: var(--navy-text); padding: 4.5rem max(5vw, 48px) 0; }
   .ind-img-main { height: 200px; }
   .ind-img-sub { height: 140px; }
   .testimonials-grid { grid-template-columns: 1fr; }
+  .switcher-tab { padding: 0.8rem 1.15rem; font-size: 0.78rem; }
+  .ind-tab-btn { padding: 0.6rem 1.1rem; font-size: 0.78rem; }
+  .vs-cell, .vs-col-head { padding: 0.8rem 1.1rem; }
+  .modal-box { padding: 1.75rem; border-radius: var(--radius-lg); }
+  .modal-title { font-size: 1.3rem; }
+  .nav-logo { font-size: 1rem; }
+  .hero-badge { font-size: 0.68rem; padding: 0.35rem 0.85rem; }
+  .about-float-stat { padding: 1rem 1.2rem; }
+  .about-float-stat-num { font-size: 1.7rem; }
+}
+@media (max-width: 420px) {
+  .hero-proof { gap: 1rem 1.75rem; }
+  .proof-num { font-size: 1.6rem; }
+  .btn-primary, .btn-secondary, .btn-white, .btn-ghost-white { padding: 0.8rem 1.4rem; font-size: 0.86rem; }
+  .service-card, .result-card { padding: 1.4rem; }
+  .about-float-stat { position: static; margin-top: 1rem; width: fit-content; }
+  .guarantee-badge-wrap { align-self: flex-start; }
 }
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; }
@@ -912,6 +947,8 @@ footer { background: var(--navy-text); padding: 4.5rem max(5vw, 48px) 0; }
       <div class="hero-actions">
         <a href="#" class="btn-primary" onclick="openModal(event)">Book a Strategy Call &rarr;</a>
         <a href="#results" class="btn-secondary">View Results</a>
+      </div>
+      <div class="hero-proof">
         <div class="proof-item">
           <div class="proof-num">£<span class="count-up" data-target="2" data-prefix="">0</span>M<span class="accent">+</span></div>
           <div class="proof-label">Ad spend<br>managed</div>
