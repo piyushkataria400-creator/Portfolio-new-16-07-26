@@ -917,7 +917,16 @@ footer { background: var(--navy-text); padding: 4.5rem max(5vw, 48px) 0; }
 </div>
 
 <!-- HERO -->
-<div class="hero-main">
+<section class="hero" id="home">
+  <div class="hero-glow"></div>
+
+  <div class="hero-switcher">
+    <button class="switcher-tab active" onclick="switchHero('construction',this)">
+      <span class="tab-dot"></span> Construction &amp; Manufacturing
+    </button>
+  </div>
+
+  <div class="hero-main">
     <div class="hero-content">
       <div class="hero-badge">
         <span class="hero-badge-dot"></span>
